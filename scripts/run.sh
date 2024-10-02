@@ -3,4 +3,4 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd $DIR/../
 
 export ROBOTHOR_BASE_DIR=`pwd`
-docker run --rm -it ai2thor-docker:latest python3 example_agent.py
+docker run --rm -it --gpus all ai2thor-docker:latest python3 example_agent.py

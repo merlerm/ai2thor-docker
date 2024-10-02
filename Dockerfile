@@ -1,10 +1,11 @@
 ARG CUDA_VERSION
 
-FROM nvidia/cuda:$CUDA_VERSION-devel-ubuntu18.04
+# FROM nvidia/cuda:$CUDA_VERSION-devel-ubuntu18.04
+FROM nvidia/cuda:12.1.0-cudnn8-devel-ubuntu20.04
 ARG NVIDIA_VERSION
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get -y install python3-pip libvulkan1 python3-venv vim pciutils wget git kmod vim git
+RUN apt-get update && apt-get -y install python3-pip libvulkan1 python3-venv vim pciutils wget git kmod vim git libglib2.0-0 libsm6 libxrender1 libxext6
 
 ENV APP_HOME /app
 WORKDIR $APP_HOME
@@ -15,5 +16,10 @@ RUN pip3 install -r requirements.txt && python3 -c "import os; import ai2thor.bu
 RUN NVIDIA_VERSION=$NVIDIA_VERSION /app/install_nvidia.sh
 
 COPY example_agent.py ./
+
+COPY alfred /app/alfred
+RUN pip3 install -r alfred/requirements.txt
+
+ENV ALFRED_ROOT /app/alfred
 
 CMD ["/bin/bash"]

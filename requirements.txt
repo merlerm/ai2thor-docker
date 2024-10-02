@@ -1,1 +1,1 @@
-ai2thor
+ai2thor==4.0.0
